@@ -1,0 +1,106 @@
+chapter03: Container Images file System  ?
+
+1)  continer it mount image fileSystem in read-only Mode.
+2) what  is default size of container fileSystem  ? 
+3) if we  make  change in container , it  does not effect image namespace . 
+4) where is  container changes .
+5) every  container  has seprate filesystem/writing/changes  namespaces .
+6) what  is the container  lowerdir/upperdir 
+7) overlay2 fileSystem COW concept:  copy-on-write: 
+
+   if update any existing file from the container then  cow will come  in the  role.
+
+   overlay2 first it  copy original file/data from lowerdir  to  upperdir then it save the changes ,
+root@dockerhost:~#
+root@dockerhost:~# docker run -itd --name=con1  ubuntu
+cc76d66464166024bafb65396cdd1a54604abb9089dfc96cc042f323e219fc15
+
+
+
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~# docker exec -it con1  touch /tmp/dead.lock
+root@dockerhost:~#
+root@dockerhost:~# docker stop con1
+
+con1
+root@dockerhost:~#
+root@dockerhost:~# docker inspect con1  |  grep -i  upper
+                "UpperDir": "/var/lib/docker/overlay2/9a837564be5d3ac4bcd09836a83efc9b01f7c26cc907821d3329f28851e46066/diff",
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~# cd  /var/lib/docker/overlay2/9a837564be5d3ac4bcd09836a83efc9b01f7c26cc907821d3329f28851e46066/diff/
+root@dockerhost:/var/lib/docker/overlay2/9a837564be5d3ac4bcd09836a83efc9b01f7c26cc907821d3329f28851e46066/diff#
+root@dockerhost:/var/lib/docker/overlay2/9a837564be5d3ac4bcd09836a83efc9b01f7c26cc907821d3329f28851e46066/diff# ls
+tmp
+root@dockerhost:/var/lib/docker/overlay2/9a837564be5d3ac4bcd09836a83efc9b01f7c26cc907821d3329f28851e46066/diff# cd tmp/
+root@dockerhost:/var/lib/docker/overlay2/9a837564be5d3ac4bcd09836a83efc9b01f7c26cc907821d3329f28851e46066/diff/tmp# ls
+dead.lock
+root@dockerhost:/var/lib/docker/overlay2/9a837564be5d3ac4bcd09836a83efc9b01f7c26cc907821d3329f28851e46066/diff/tmp# rm -f dead.lo  ck
+root@dockerhost:/var/lib/docker/overlay2/9a837564be5d3ac4bcd09836a83efc9b01f7c26cc907821d3329f28851e46066/diff/tmp#
+root@dockerhost:/var/lib/docker/overlay2/9a837564be5d3ac4bcd09836a83efc9b01f7c26cc907821d3329f28851e46066/diff/tmp#
+root@dockerhost:/var/lib/docker/overlay2/9a837564be5d3ac4bcd09836a83efc9b01f7c26cc907821d3329f28851e46066/diff/tmp# cd
+root@dockerhost:~#
+root@dockerhost:~# docker start con1
+
+con1
+root@dockerhost:~#
+root@dockerhost:~# df -h
+Filesystem                         Size  Used Avail Use% Mounted on
+tmpfs                              388M  1.5M  387M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv  9.8G  4.1G  5.2G  45% /
+tmpfs                              1.9G     0  1.9G   0% /dev/shm
+tmpfs                              5.0M     0  5.0M   0% /run/lock
+/dev/sda2                          1.8G  252M  1.4G  16% /boot
+tmpfs                              388M  4.0K  388M   1% /run/user/1000
+overlay                            9.8G  4.1G  5.2G  45% /var/lib/docker/overlay2/9a837564be5d3ac4bcd09836a83efc9b01f7c26cc907821  d3329f28851e46066/merged
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~# docker run -itd --name=con2  ubuntu
+fbbe21e19122510c8750ad5d892dc533302d7fdecfd4771308b917410f06e716
+root@dockerhost:~#
+root@dockerhost:~# df -h
+Filesystem                         Size  Used Avail Use% Mounted on
+tmpfs                              388M  1.6M  387M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv  9.8G  4.1G  5.2G  45% /
+tmpfs                              1.9G     0  1.9G   0% /dev/shm
+tmpfs                              5.0M     0  5.0M   0% /run/lock
+/dev/sda2                          1.8G  252M  1.4G  16% /boot
+tmpfs                              388M  4.0K  388M   1% /run/user/1000
+overlay                            9.8G  4.1G  5.2G  45% /var/lib/docker/overlay2/9a837564be5d3ac4bcd09836a83efc9b01f7c26cc907821  d3329f28851e46066/merged
+overlay                            9.8G  4.1G  5.2G  45% /var/lib/docker/overlay2/fddab2583da38e7561392792b520323b002ffb81db10dec  028552083e1e46bd4/merged
+root@dockerhost:~#
+root@dockerhost:~# docker run -itd --name=con3  ubuntu
+bffbd3d5af7dc3c1eb0ca8312e1a88c3f59bc61732575707b75839e325b6dc10
+
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~# df -h
+Filesystem                         Size  Used Avail Use% Mounted on
+tmpfs                              388M  1.7M  387M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv  9.8G  4.1G  5.2G  45% /
+tmpfs                              1.9G     0  1.9G   0% /dev/shm
+tmpfs                              5.0M     0  5.0M   0% /run/lock
+/dev/sda2                          1.8G  252M  1.4G  16% /boot
+tmpfs                              388M  4.0K  388M   1% /run/user/1000
+overlay                            9.8G  4.1G  5.2G  45% /var/lib/docker/overlay2/9a837564be5d3ac4bcd09836a83efc9b01f7c26cc907821  d3329f28851e46066/merged
+overlay                            9.8G  4.1G  5.2G  45% /var/lib/docker/overlay2/fddab2583da38e7561392792b520323b002ffb81db10dec  028552083e1e46bd4/merged
+overlay                            9.8G  4.1G  5.2G  45% /var/lib/docker/overlay2/769d748fb877884fc2f2b3f4b174f17cf012600ae61eb06  ac5c24fd4cb42b106/merged
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~# docker os
+docker: 'os' is not a docker command.
+See 'docker --help'
+root@dockerhost:~# docker  ps
+CONTAINER ID   IMAGE     COMMAND       CREATED              STATUS              PORTS     NAMES
+bffbd3d5af7d   ubuntu    "/bin/bash"   About a minute ago   Up About a minute             con3
+fbbe21e19122   ubuntu    "/bin/bash"   About a minute ago   Up About a minute             con2
+cc76d6646416   ubuntu    "/bin/bash"   4 minutes ago        Up 2 minutes                  con1
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~# df -h  /
+Filesystem                         Size  Used Avail Use% Mounted on
+/dev/mapper/ubuntu--vg-ubuntu--lv  9.8G  4.1G  5.2G  45% /
+root@dockerhost:~#

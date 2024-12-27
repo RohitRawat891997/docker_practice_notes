@@ -1,0 +1,338 @@
+point-1: can be attach same volume to mulitple container: yes
+
+Block Disk:  Single Node Write 
+NAS/NFS:  multi write Operation:
+
+
+point-2:  can be attach more the one volume to same container : yes 
+
+
+Points:3: can be extend size of exsting volume 
+
+Note: 
+
+storage:
+   standard patition
+   lvm based partion
+
+
+lab-4: how to  install docker enginer in seprate disk/path  ? 
+
+
+options-1:  100Gi----map----/var/lib/docker-
+
+option-2:  /opt---100Gi
+
+
+
+lab-5: how to attach based storage to container ? (NFS)
+
+information
+NFS details: 192.168.139.144
+Exportname: /scratch
+
+step-2: Nfs Client plgugin docker side  installed
+
+______________________________________________
+
+
+docker commit: 
+   running: 1 sec: 
+   Image layer:  space: 
+
+
+software related binary/libs as image save: docker commit
+
+Largefile/User/companta/application: docker volume 
+_______________________________________________
+
+
+docker commit: it does not capture  external volume data inside the Images:
+        commit  persistent upperdir changes as image formate .
+
+root@docker1:~#
+root@docker1:~# docker volume ls
+DRIVER    VOLUME NAME
+root@docker1:~#
+root@docker1:~# docker volume create  --opt type=nfs --opt device=192.168.139.144:/scratch nfsvol
+nfsvol
+root@docker1:~#
+root@docker1:~# docker volume ls
+DRIVER    VOLUME NAME
+local     nfsvol
+root@docker1:~#
+root@docker1:~#
+root@docker1:~# docker pull mysql:5.6
+
+5.6: Pulling from library/mysql
+35b2232c987e: Pull complete
+fc55c00e48f2: Pull complete
+0030405130e3: Pull complete
+e1fef7f6a8d1: Pull complete
+1c76272398bb: Pull complete
+f57e698171b6: Pull complete
+f5b825b269c0: Pull complete
+dcb0af686073: Pull complete
+27bbfeb886d1: Pull complete
+6f70cc868145: Pull complete
+1f6637f4600d: Pull complete
+Digest: sha256:20575ecebe6216036d25dab5903808211f1e9ba63dc7825ac20cb975e34cfcae
+Status: Downloaded newer image for mysql:5.6
+docker.io/library/mysql:5.6
+root@docker1:~#
+root@docker1:~# docker run -d --name=mysql -v nfsvol:/var/lib/mysql  -e MYSQL_ROOT_PASSWORD=redhat my5.6
+docker: Error response from daemon: failed to populate volume: error while mounting volume '/opt/dockolumes/nfsvol/_data': failed to mount local volume: mount 192.168.139.144:/scratch:/opt/docker/volumesvol/_data: invalid argument.
+See 'docker run --help'.
+root@docker1:~#
+root@docker1:~#
+root@docker1:~#
+root@docker1:~# mount  192.168.139.144:/scratch  /mnt
+root@docker1:~# umount /mnt
+root@docker1:~#
+root@docker1:~#
+root@docker1:~# docker rm  mysql
+Error response from daemon: No such container: mysql
+root@docker1:~#
+root@docker1:~# docker volume rm nfsvol
+nfsvol
+root@docker1:~#
+root@docker1:~# docker volume create  --opt type=nfs --opt o=addr=192.168.139.144,rw --opt device=/sch nfsvol
+root@docker1:~# docker volume create  --opt type=nfs --opt o=addr=192.168.139.144,rw --opt device=/sch nfsvol
+nfsvol
+root@docker1:~#
+root@docker1:~#
+root@docker1:~# docker run -d --name=mysql -v nfsvol:/var/lib/mysql  -e MYSQL_ROOT_PASSWORD=redhat my5.6
+docker: Error response from daemon: failed to populate volume: error while mounting volume '/opt/dockolumes/nfsvol/_data': failed to mount local volume: mount /scratch:/opt/docker/volumes/nfsvol/_data, : addr=192.168.139.144: invalid argument.
+See 'docker run --help'.
+root@docker1:~#
+root@docker1:~# docker volume rm nfsvol
+nfsvol
+root@docker1:~#
+root@docker1:~# docker volume create  --opt type=nfs --opt o=addr=192.168.139.144,rw --opt device=:/sch nfsvol
+root@docker1:~# docker volume create  --opt type=nfs --opt o=addr=192.168.139.144,rw --opt device=:/sch nfsvol
+nfsvol
+root@docker1:~#
+root@docker1:~#
+root@docker1:~# docker run -d --name=mysql -v nfsvol:/var/lib/mysql  -e MYSQL_ROOT_PASSWORD=redhat my5.6
+ef61292d77fe814ffb1219c827f40f6dc9355b1e0b56e0cc84e70519436b1f50
+root@docker1:~#
+root@docker1:~#
+root@docker1:~# docker ps
+CONTAINER ID   IMAGE       COMMAND                  CREATED          STATUS         PORTS      NAMES
+ef61292d77fe   mysql:5.6   "docker-entrypoint.s…"   11 seconds ago   Up 9 seconds   3306/tcp   mysql
+root@docker1:~#
+root@docker1:~# docker exec -it mysql  bash
+root@ef61292d77fe:/# mysql -u root -p
+Enter password:
+ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock'
+root@ef61292d77fe:/# mysql -u root -p
+Enter password:
+ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock'
+root@ef61292d77fe:/# mysql -u root -p
+Enter password:
+ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock'
+root@ef61292d77fe:/# mount
+root@ef61292d77fe:/# mount | grep nfs
+:/scratch on /var/lib/mysql type nfs (rw,relatime,vers=3,rsize=1048576,wsize=1048576,namlen=255,hard,o=tcp,timeo=600,retrans=2,sec=sys,mountaddr=192.168.139.144,mountvers=3,mountproto=tcp,local_lock=nondr=192.168.139.144)
+root@ef61292d77fe:/# exit
+exit
+root@docker1:~# docker rm -f mysql
+
+
+
+mysql
+root@docker1:~#
+root@docker1:~#
+root@docker1:~#
+root@docker1:~# docker run -d  --name=test -v myslqvol:/demo  nginx
+Unable to find image 'nginx:latest' locally
+latest: Pulling from library/nginx
+13808c22b207: Pull complete
+c46d32988911: Pull complete
+b9d060e68bbc: Pull complete
+c028eb95b065: Pull complete
+e74ab6743f66: Pull complete
+4a666f159bd0: Pull complete
+297a65ba6f04: Pull complete
+Digest: sha256:0463a96ac74b84a8a1b27f3d1f4ae5d1a70ea823219394e131f5bf3536674419
+Status: Downloaded newer image for nginx:latest
+c57be196c2a1dab0498fdc414eef59865410205df305a8afee34ce2e73b05416
+root@docker1:~# docker rm -f test
+test
+root@docker1:~#
+root@docker1:~# docker volume ls
+DRIVER    VOLUME NAME
+local     myslqvol
+local     nfsvol
+root@docker1:~#
+root@docker1:~# docker run -d  --name=test -v nfsvol:/demo  nginx
+4a5ac5c9c071c738a0a95122da96ab143a496efbd4087dadb4a0aa8f17454e1a
+root@docker1:~#
+root@docker1:~# docker exec -it test bash
+root@4a5ac5c9c071:/# cd  /demo/
+root@4a5ac5c9c071:/demo# touch abc{1..100}
+root@4a5ac5c9c071:/demo#
+root@4a5ac5c9c071:/demo# exit
+exit
+root@docker1:~#
+root@docker1:~# docker rm -f $(docker ps -q -a)
+4a5ac5c9c071
+root@docker1:~#
+root@docker1:~# docker volume  rm nfsvol
+nfsvol
+root@docker1:~#
+root@docker1:~# mkdir  /nfsvol
+root@docker1:~#
+root@docker1:~# mount  192.168.139.144:/scratch  /nfsvol
+root@docker1:~#
+root@docker1:~# docker run -d  --name=test -v /nfsvol:/demo  nginx
+07b3439cdc4112b63f8d13f6fc3b13b43164c8dd8a2de0c386271a011501cc80
+root@docker1:~#
+root@docker1:~#
+root@docker1:~# docker volume ls
+DRIVER    VOLUME NAME
+local     myslqvol
+root@docker1:~#
+root@docker1:~# df -h |  grep nfs
+192.168.139.144:/scratch           9.8G  7.8G  1.5G  84% /nfsvol
+root@docker1:~#
+root@docker1:~#
+root@docker1:~#
+root@docker1:~#
+root@docker1:~#
+root@docker1:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS     NAMES
+07b3439cdc41   nginx     "/docker-entrypoint.…"   4 minutes ago   Up 4 minutes   80/tcp    test
+root@docker1:~#
+root@docker1:~#
+root@docker1:~# docker cp  test:/etc/nginx.conf   /tmp
+Error response from daemon: Could not find the file /etc/nginx.conf in container test
+root@docker1:~#
+root@docker1:~# docker cp  test:/etc/nginx/nginx.conf   /tmp
+Successfully copied 2.56kB to /tmp
+root@docker1:~#
+root@docker1:~#
+root@docker1:~# vim run.sh
+root@docker1:~#
+root@docker1:~# docker cp run.sh   test:/root
+Successfully copied 2.05kB to test:/root
+root@docker1:~#
+root@docker1:~# docker exec -it test bash
+root@07b3439cdc41:/# ls /root
+run.sh
+root@07b3439cdc41:/#
+exit
+root@docker1:~#
+root@docker1:~# history
+    1  apt-get install ca-certificates curl
+    2  curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+    3  echo   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https: //download.docker.com/linux/ubuntu \
+    4    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" |   sudo tee /etc/apt/sources.list .d/docker.list > /dev/null
+    5  apt-get update
+    6  apt-get install docker-ce
+    7  ip  s
+    8  ip a s
+    9  docker network create -d macvlan --subnet=192.168.139.0/24 --gateway=192.168.2.1
+   10  ip route
+   11  docker network create -d macvlan --subnet=192.168.139.0/24 --gateway=192.168.139.2 -o parent= ens33 demo-macvlan-net
+   12  docker run -d --name=con1  --ip=192.168.139.50 nginx
+   13  docker rm -f con1
+   14  docker run -d --name=con1  --network demo-macvlan-net  --ip=192.168.139.50 nginx
+   15  docker ps
+   16  docker rm -f $(docker ps -q -)
+   17  docker rm -f $(docker ps -q -a)
+   18  docker volume prune
+   19  docker ps
+   20  docker ps  -a
+   21  docker volume ls
+   22  docker volume prune  -a
+   23  history
+   24  docker volume create --opt type=xfs --opt device=/dev/sdb   testvol
+   25  docker volume ls
+   26  docker ps -a
+   27  docker volume rm testvol
+   28  docker volume ls
+   29  ls /var/lib/docker/volumes/
+   30  ls /var/lib/docker/volumes/mysqlvol/_data/
+   31  docker run -d --name=demo  -v mysqlvol:/var/lib/mysql  -e MYSQL_ROOT_PASSWORD=redhat  mysql:5 .6
+   32  docker exec -it demo bash
+   33  docker volume create vol2
+   34  lsblk
+   35  history
+   36  exit
+   37  clear
+   38  docker volume ls
+   39  docker volume create testvol
+   40  docker run -d --name=web1 -v testvol:/usr/share/nginx/html nginx
+   41  docker run -d --name=web2  -v testvol:/usr/share/nginx/html nginx
+   42  docker attach web1
+   43  docker start web1
+   44  docker exec -it web1 bash
+   45  docker exec -it web2 bash
+   46  docker rm -f  web1
+   47  docker rm -f  web2
+   48  docker run -d --name=web1 -v testvol:/usr/share/nginx/html nginx
+   49  docker run -d --name=web2 -v testvol:/usr/share/nginx/html:ro  nginx
+   50  docker exec -it web2 bash
+   51  clear
+   52  docker volume create  logvol
+   53  docker volume create  datalog
+   54  docker run -d --name=web  -v  logvol:/test   -v datalog:/logs  nginx
+   55  lsb
+   56  clear
+   57  lsblk
+   58  mkfs.xfs  /dev/sdc
+   59  mount /dev/sdc  /var/lib/docker/
+   60  systemctl restart docker
+   61  docker images
+   62  docker pull nginx
+   63  docker volume create  testvol
+   64  mkdir -p /opt/docker
+   65  lsblk
+   66  mkfs -t xfs /dev/sdd
+   67  mount /dev/sdd /opt/docker/
+   68  docker info | grep -i root
+   69  vim /etc/docker/daemon.json
+   70  systemctl restart docker
+   71  ls /opt/docker/
+   72  docker info | grep -i root
+   73  apt install nfs-common
+   74  clear
+   75  docker volume ls
+   76  docker volume create  --opt type=nfs --opt device=192.168.139.144:/scratch nfsvol
+   77  docker volume ls
+   78  docker pull mysql:5.6
+   79  docker run -d --name=mysql -v nfsvol:/var/lib/mysql  -e MYSQL_ROOT_PASSWORD=redhat mysql:5.6
+   80  mount  192.168.139.144:/scratch  /mnt
+   81  umount /mnt
+   82  docker rm  mysql
+   83  docker volume rm nfsvol
+   84  docker volume create  --opt type=nfs --opt o=addr=192.168.139.144,rw --opt device=/scratch nf svol
+   85  docker run -d --name=mysql -v nfsvol:/var/lib/mysql  -e MYSQL_ROOT_PASSWORD=redhat mysql:5.6
+   86  docker volume rm nfsvol
+   87  docker volume create  --opt type=nfs --opt o=addr=192.168.139.144,rw --opt device=:/scratch n fsvol
+   88  docker run -d --name=mysql -v nfsvol:/var/lib/mysql  -e MYSQL_ROOT_PASSWORD=redhat mysql:5.6
+   89  docker ps
+   90  docker exec -it mysql  bash
+   91  docker rm -f mysql
+   92  docker run -d  --name=test -v myslqvol:/demo  nginx
+   93  docker rm -f test
+   94  docker volume ls
+   95  docker run -d  --name=test -v nfsvol:/demo  nginx
+   96  docker exec -it test bash
+   97  docker rm -f $(docker ps -q -a)
+   98  docker volume  rm nfsvol
+   99  mkdir  /nfsvol
+  100  mount  192.168.139.144:/scratch  /nfsvol
+  101  docker run -d  --name=test -v /nfsvol:/demo  nginx
+  102  docker volume ls
+  103  df -h |  grep nfs
+  104  docker ps
+  105  docker cp  test:/etc/nginx.conf   /tmp
+  106  docker cp  test:/etc/nginx/nginx.conf   /tmp
+  107  vim run.sh
+  108  docker cp run.sh   test:/root
+  109  docker exec -it test bash
+  110  history
+root@docker1:~#
+

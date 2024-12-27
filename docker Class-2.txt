@@ -1,0 +1,200 @@
+ Container 
+
+
+
+Chapter-1: 
+
+1) Server provisioning ?
+2) H/w Virtulizations ? 
+3) OS virtulizations ?
+4) H/w Virtulization vs  OS Virtulization ?
+5) Container ? 
+6) Container Arch  ? 
+7) Container Use case
+8) Quiz ? 
+ 
+
+Server provisioning ?
+
+
+      1) Database :  mysql/oracle/pgsql/sql/mariadb
+ 
+      2) Application: jboss/tomcat/websphere/
+
+      3) Webserver:  apache/nginx/IIS
+
+
+ Prod
+ Test 
+
+ Development 
+
+Server provisioning:
+            1) Physical Servers 
+
+            2) Virtulization : 
+
+
+
+                    1) H/w Based Virtulization: 
+
+
+
+1) vm1: 1GB/1cpu/10HD/Licence.  
+
+ 1 vms:  
+           1 software: 1 container
+           1 software: 1 container
+
+2) provisioning time ? 
+
+3) software  migration delay ? 
+
+
+
+ Confilict:
+         1) Libs
+         2) Network/Port conflict 
+
+
+
+
+        2) OS virtulizations:  Containers:
+
+
+           1) using container we can run multiple softwate a time  inside the same OS .
+           2) Container it container minimal software requiment(Libs/config/env) for executing any software 
+           3) Container it is light weight env which only software depends.
+           4) Container is it minimal  foot print of OS . 
+           5) container act a  OS . it  has seprate IPs/Writing Disk/Process/VNIC/
+
+
+
+Question-1;  No  ? 
+
+Question-2; ?
+
+
+Monolethic vs  micro-Service  ?
+____________________________________________________________________________________________________________
+
+
+Container Arch ? major key terms: 
+
+
+1) ContainerHost/Docker Host : the  machine/servers  there we are running software as a containers. 
+
+       H/w:
+                 1) Physical 
+                 2) Virtulized:
+                                1) On-primses: 
+                                2) Cloud Based: 
+                                             1) Public:  aws/azure/google
+                                             2) Private :  Openstack 
+
+      Requirments:
+
+        
+
+
+
+2) Docker Client/Container Client ? :
+
+
+3)  Container Images : it is light weight template which contains software depends.
+                       it is small foot  print of software depends .
+
+                              1) Community based:  (ready to used) 
+                              2) Custom Image : 
+
+4) Containter Image Registry Server:  the server there we are storing images.
+          
+                                 1) Community Based:         
+                                               Docker : Docker HUb
+                                               Redhat: registry.access.redhat.com
+                                                         quay.io
+                                               google: Gcr.io
+                                 2) company  ? 
+
+
+5) Container: 
+                1) it is the running Mode  of  Images.
+                2) using same  image we can deploy multiple container.
+
+
+
+
+hold ? 
+
+6) Namespaces:
+
+
+
+7) Cgroup: it limit usage of container ?
+
+
+
+
+
+8) Container Runtime  service :  it the daemon/service/process which take any command related to container and apply it .
+
+    1) dockerd
+
+    2) Containerd
+
+    3) cri-o 
+
+
+
+
+docker (containerd): 
+
+       1) docker-ce: community edition
+       2) docker-ee: enterprise edition 
+    
+
+
+Packaged;
+
+CLI 
+daemon
+
+Quiz ? 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+

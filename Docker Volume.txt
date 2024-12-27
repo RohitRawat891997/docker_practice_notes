@@ -1,0 +1,445 @@
+1) can be mount multiple volume ? Yes :
+
+2) can be mount same volume in multiple container ? 
+
+3)  if we commit  any container, it does not include volume data .
+
+4) COW solution  ?
+
+5) we can not mount the new volume in running container ? 
+
+6) 
+
+ commit:  software related data 
+ volume: user related data :
+
+7) 
+
+8) how to provision  in cloud ? 
+
+Volume: 
+
+1) HostPath 
+2) native Path : docker volume create vol1
+
+root@docker:~#
+root@docker:~# docker volume ls
+DRIVER    VOLUME NAME
+root@docker:~#
+root@docker:~#
+root@docker:~#
+root@docker:~# docker volume create vol1
+vol1
+root@docker:~#
+root@docker:~# docker volume ls
+DRIVER    VOLUME NAME
+local     vol1
+root@docker:~#
+root@docker:~#
+root@docker:~# ls /storage/
+buildkit  containers  engine-id  image  network  overlay2  plugins  runtimes  swarm  tmp  volumes
+root@docker:~#
+root@docker:~# ls /storage/volumes/
+backingFsBlockDev  metadata.db  vol1
+root@docker:~#
+root@docker:~#
+root@docker:~# docker volume create myvol
+myvol
+root@docker:~#
+root@docker:~# docker volume create  dbvol
+dbvol
+root@docker:~#
+root@docker:~# docker volume ls
+DRIVER    VOLUME NAME
+local     dbvol
+local     myvol
+local     vol1
+root@docker:~# docker volume ls
+DRIVER    VOLUME NAME
+local     dbvol
+local     myvol
+local     vol1
+root@docker:~#
+root@docker:~# ls /storage/volumes/
+backingFsBlockDev  dbvol  metadata.db  myvol  vol1
+root@docker:~#
+root@docker:~# df -h  /storage/
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sdb         10G  187M  9.9G   2% /storage
+root@docker:~#
+root@docker:~#
+root@docker:~# docker run -d --name=web1  -v  vol1:/usr/share/nginx/html   nginx
+Unable to find image 'nginx:latest' locally
+latest: Pulling from library/nginx
+a378f10b3218: Pull complete
+4dfff0708538: Pull complete
+2135e49ace4b: Pull complete
+c843f6b280ce: Pull complete
+6f35ab6f1400: Pull complete
+6c538b49fa4a: Pull complete
+d57731fb9008: Pull complete
+Digest: sha256:b4af4f8b6470febf45dc10f564551af682a802eda1743055a7dfc8332dffa595
+Status: Downloaded newer image for nginx:latest
+eda7fa5dd81f23c71f8d892ca770d38fccfd18842567d426bf5e97ca6d3d79c0
+root@docker:~#
+root@docker:~# ls /
+abc  boot  dev  home  lib32  libx32      media  opt   root  sbin  srv      swap.img  test  usr
+bin  demo  etc  lib   lib64  lost+found  mnt    proc  run   snap  storage  sys       tmp   var
+root@docker:~#
+root@docker:~#
+root@docker:~#
+root@docker:~# docker volume ls
+DRIVER    VOLUME NAME
+local     dbvol
+local     myvol
+local     vol1
+root@docker:~#
+root@docker:~# docker  info | grep -i root
+WARNING: No swap limit support
+ Docker Root Dir: /storage
+root@docker:~#
+root@docker:~# ls /storage/
+buildkit  containers  engine-id  image  network  overlay2  plugins  runtimes  swarm  tmp  volumes
+root@docker:~#
+root@docker:~# ls /storage/volumes/
+backingFsBlockDev  dbvol  metadata.db  myvol  vol1
+root@docker:~#
+root@docker:~#
+root@docker:~# df -h   /storage/
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sdb         10G  380M  9.7G   4% /storage
+root@docker:~#
+root@docker:~# docker volume  ls
+DRIVER    VOLUME NAME
+local     dbvol
+local     myvol
+local     vol1
+root@docker:~# docker rm -f $(docker ps -q -a)
+eda7fa5dd81f
+root@docker:~#
+root@docker:~# docker volume  ls
+DRIVER    VOLUME NAME
+local     dbvol
+local     myvol
+local     vol1
+root@docker:~# docker volume rm  vol1
+vol1
+root@docker:~# docker voume prune
+docker: 'voume' is not a docker command.
+See 'docker --help'
+root@docker:~#
+root@docker:~# docker volume prune
+WARNING! This will remove anonymous local volumes not used by at least one container.
+Are you sure you want to continue? [y/N] y
+Total reclaimed space: 0B
+root@docker:~# docker volume prune   -a
+WARNING! This will remove all local volumes not used by at least one container.
+Are you sure you want to continue? [y/N] y
+Deleted Volumes:
+dbvol
+myvol
+
+Total reclaimed space: 0B
+root@docker:~# docker volume  ls
+DRIVER    VOLUME NAME
+root@docker:~#
+root@docker:~#
+root@docker:~# docker volume create vol1
+vol1
+root@docker:~# docker volume create vol2
+vol2
+root@docker:~# docker volume create vol3
+vol3
+root@docker:~#
+root@docker:~#
+root@docker:~#
+root@docker:~# docker system df
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          2         0         264.6MB   264.6MB (100%)
+Containers      0         0         0B        0B
+Local Volumes   3         0         0B        0B
+Build Cache     0         0         0B        0B
+root@docker:~#
+root@docker:~# mkdir  /tt
+root@docker:~#
+root@docker:~# docker volume create vol5
+vol5
+root@docker:~# cat /etc/docker/daemon.json
+{
+  "data-root": "/storage"
+}
+root@docker:~# history
+    1  clear
+    2  docker
+    3  docker images
+    4  docker pull nginx
+    5  docker images
+    6  docker pull nginx:1.2999
+    7  docker pull nginx:1.20
+    8  docker images
+    9  docker search postgres
+   10  docker search jenkins
+   11  docker search registry.access.redhat.com/jenkins
+   12  docker search registry.access.redhat.com/nginx
+   13  docker  pull registry.access.redhat.com/ubi8/nginx-120
+   14  docker images
+   15  docker  pull  docker.io/alpine
+   16  docker images
+   17  docker system df
+   18  df -TH  /
+   19  docker info |  grep -i root
+   20  ls  /var/lib/docker/
+   21  docker pull docker.io/ubuntu
+   22  docker images
+   23  docker run -d --name=ram nginx
+   24  docker exec -it  ram bash
+   25  docker images
+   26  docker rmi alpine
+   27  docker rmi  nginx:1.20
+   28  docker  images
+   29  history
+   30  docker  pull registry.access.redhat.com/nginx
+   31  docker  search  registry.access.redhat.com/nginx
+   32  docker search  registry.access.redhat.com/rhel8
+   33  docker search  registry.access.redhat.com/rhel7
+   34  docker search  registry.access.redhat.com/rhel7.2
+   35  docker  pull   registry.access.redhat.com/rhel7.2
+   36  docker images
+   37  ping google.com
+   38  docker  pull   registry.access.redhat.com/rhe09jkjl7.2
+   39  clear
+   40  docker ps
+   41  docker rm -f ram
+   42  docker ps
+   43  docker  run  -d  --name=web1   nginx
+   44  ls /var/lib/docker/containers/
+   45  docker ps
+   46  docker exec -it web1  bash \
+   47  docker exec -it web1  bash
+   48  touch  /abc
+   49  docker exec -it web1  bash
+   50  ls /etc/nginx
+   51  docker  history  nginx
+   52  docker exec -it web1  sh
+   53  docker exec -it web1  touch /test
+   54  ls -l /test
+   55  docker exec -it  web1 bash
+   56  docker exec -it  web1  ifconfig
+   57  docker  inspect  web1
+   58  docker exec -it  web1   bash
+   59  ifconfig
+   60  exit
+   61  clear
+   62  docker ps
+   63  docker stop  web1
+   64  docker start web1
+   65  docker stats web1
+   66  docker top web1
+   67  docker exec  -it  web1  bash
+   68  docker stop web1
+   69  docker rm web1
+   70  docker images
+   71  docker run -d  --name=web1  nginx
+   72  docker exec  -it  bash
+   73  docker exec  -it web1  bash
+   74  docker images
+   75  docker run -d  --name=web2 f9cc643c7069
+   76  docker exec  -it web2 bash
+   77  docker ps
+   78  docker ps -a
+   79  docker logs  web2
+   80  docker rm -f web2
+   81  docker search registry.access.redhat.com/httpd
+   82  docker pull  registry.access.redhat.com/rhscl/nginx-114-rhel7
+   83  docker  images
+   84  docker run -d  --name=web2 38ef2df4d903
+   85  docker exec -it web2 bash
+   86  docker logs web2
+   87  docker rm web2
+   88  docker pull  registry.access.redhat.com/httpd
+   89  docker search   registry.access.redhat.com/httpd
+   90  docker pull registry.access.redhat.com/ubi8/httpd-24
+   91  docker images
+   92  docker run -d  --name=web3  b5d6275ac13a
+   93  docker ps
+   94  docker exec  -it web3  bash
+   95  docker images
+   96  docker pull debian:bookworm-slim
+   97  docker system df
+   98  docker ps -a
+   99  docker rm -f web1
+  100  docker rm -f web3
+  101  docker system df
+  102  docker run -d  --name=web1   nginx
+  103  docker run -d  --name=web2   nginx
+  104  docker system df
+  105  docker rm  -f web1
+  106  docker rm  -f web2
+  107  docker  images
+  108  docker rmi 61395b4c586d
+  109  docker images
+  110  docker run -d --name=web1 nginx
+  111  docker run -d --name=web2 nginx
+  112  docker images
+  113  docker ps
+  114  docker exec  -it web1 bash
+  115  docker stop web1
+  116  docker start web1
+  117  docker exec -it web1 bash
+  118  docker rm -f web1
+  119  docker rm -f web2
+  120  docker run -d  --name=web1  nginx
+  121  docker run -d  --name=web2  nginx
+  122  docker exec -it web1  bash
+  123  docker  exec  -it web2 bash
+  124  docker ps -a
+  125  docker rm -f  $(docker ps -q -a)
+  126  docker ps -a
+  127  docker images
+  128  docker run -itd   --name=web1   ubuntu
+  129  docker top web1
+  130  docker attach web1
+  131  docker ps
+  132  docker ps -a
+  133  docker rm -f web1
+  134  docker run -itd   --name=web1   ubuntu
+  135  docker attach web1
+  136  docker rm -f web1
+  137  docker run -d   --name=web1   nginx
+  138  docker exec -it web1 bash
+  139  docker rm -f web1
+  140  docker run -itd   --name=web1    ubuntu
+  141  docker attach web1
+  142  docker start web1
+  143  docker exec -it web1 bash
+  144  docker attach web1
+  145  useradd amit
+  146  su  - amit
+  147  usermod -aG  docker amit
+  148  su  - amit
+  149  docker search java
+  150  docker pull node
+  151  docker rm -f $(docker ps -q -a)
+  152  docker run -itd --name=con1 ubuntu
+  153  docker attach con1
+  154  docker  images
+  155  docker commit  con1  apache
+  156  docker  images
+  157  docker rm  con1
+  158  docker system df
+  159  docker rmi 3565a89d9e81
+  160  docker run -itd --name=con1  apache
+  161  docker attach cone1
+  162  docker attach con1
+  163  docker rm -f con1
+  164  docker  images
+  165  docker  history apache
+  166  ls /var/lib/docker/overlay2/
+  167  ls /var/lib/docker/overlay2/29d39806ad2851d5b9a3097ac5acf3de0ca812b3e79ab886ff238c888488c013/diff/
+  168  ls /var/lib/docker/overlay2/e525e9ba5f861fa92e73dc06d5e89e18c357aa07de884a14aeab02a81d14367b/
+  169  ls /var/lib/docker/overlay2/e525e9ba5f861fa92e73dc06d5e89e18c357aa07de884a14aeab02a81d14367b/diff/
+  170  docker run -itd --name=con1 apache
+  171  docker inspect  con1  | grep -i lowerdir
+  172  docker attach con1
+  173  docker images
+  174  docker rmi 22b73d6dfc21
+  175  docker rm -f con1
+  176  docker rmi 22b73d6dfc21
+  177  ls /var/lib/docker/overlay2/
+  178  docker run -itd --name=con1 ubuntu
+  179  docker  attach con1
+  180  docker commit con1 apache:2.4
+  181  docker rm -f con1
+  182  docker images
+  183  docker run -itd  --name=con1 apache:2.4
+  184  docker attach con1
+  185  docker commit con1  apache:2.5
+  186  docker rm -f con1
+  187  docker images
+  188  docker rmi  apache:2.5
+  189  docker run -itd --name=con1 ubuntu
+  190  docker  attach con1
+  191  docker images
+  192  docker rm -f $(docker ps -q -a)
+  193  docker run -itd --name=con1 ubuntu
+  194  exit
+  195  clear
+  196  history
+  197  lsb
+  198  lsblk
+  199  ls /
+  200  mount /dev/sdb  /storage/
+  201  docker rm -f $(docker ps  -q -a)
+  202  docker run -d  --name=web1  -v  /storage:/var/lib/mysql  -e MYSQL_ROOT_PASSWORD=redhat mysql:5.6
+  203  mkdir /test
+  204  mkdir /demo
+  205  docker run -d  --name=web1  -v /test:/test/logs   -v  /demo:/apps  nginx
+  206  docker rm -f $(docker ps -q -a)
+  207  rm -rf /storage/*
+  208  vim /storage/index.html
+  209  docker run -d --name=web1  -v  /storage:/usr/share/nginx/html  nginx
+  210  docker run -d --name=web2  -v  /storage:/usr/share/nginx/html  nginx
+  211  docker exec -it web1 bash
+  212  docker exec -it web2  bash
+  213  docker run -d --name=web3  -v  /storage:/usr/share/nginx/html:ro   nginx
+  214  docker exec -it web3  bash
+  215  clear
+  216  docker exec -it web1  bash
+  217  docker cp web1:/opt/java    /tmp
+  218  cat  /tmp/java
+  219  vim run.sh
+  220  docker cp run.sh  web1:/root
+  221  lsblk
+  222  ls /storage/
+  223  rm -rf  /storage/*
+  224  df -h  /storage/
+  225  docker  info | grep -i root
+  226  vim /etc/docker/daemon.json
+  227  systemctl restart docker
+  228  ls  /storage/
+  229  rm -rf /var/lib/docker/
+  230  docker  pull ubuntu
+  231  ls  /storage/
+  232  ls  /storage/overlay2/
+  233  docker info  | grep -i root
+  234  cat  /etc/docker/daemon.json
+  235  lsblk
+  236  df -h /storage/
+  237  clear
+  238  docker volume ls
+  239  docker volume create vol1
+  240  docker volume ls
+  241  ls /storage/
+  242  ls /storage/volumes/
+  243  docker volume create myvol
+  244  docker volume create  dbvol
+  245  docker volume ls
+  246  ls /storage/volumes/
+  247  df -h  /storage/
+  248  docker run -d --name=web1  -v  vol1:/usr/share/nginx/html   nginx
+  249  ls /
+  250  docker volume ls
+  251  docker  info | grep -i root
+  252  ls /storage/
+  253  ls /storage/volumes/
+  254  df -h   /storage/
+  255  docker volume  ls
+  256  docker rm -f $(docker ps -q -a)
+  257  docker volume  ls
+  258  docker volume rm  vol1
+  259  docker voume prune
+  260  docker volume prune
+  261  docker volume prune   -a
+  262  docker volume  ls
+  263  docker volume create vol1
+  264  docker volume create vol2
+  265  docker volume create vol3
+  266  docker system df
+  267  mkdir  /tt
+  268  docker volume create vol5
+  269  cat /etc/docker/daemon.json
+  270  history
+root@docker:~# vim /etc/docker/daemon.json
+root@docker:~#
+root@docker:~#
+

@@ -1,0 +1,49 @@
+chapter-5: 
+
+1) How  make any  changes inside the Images  ?
+2) how to install any software inside the Images  ? 
+3) how to any libs/binary inside Image . 
+4) modify 
+5) what is container commit operation ? 
+Image Preprations:
+
+
+1) Imperative mode: manully
+
+step-1: we should have the Raw Image/base Image  ? ( OS minor foot prints)- ubuntu/debain/alpine/rhel
+
+2) open the Images: (now lauch the container using the Raw Image )
+
+3) attach the containers 
+
+4) Install the software(langs/middleware/DB/tools/telecome software)
+
+5) now exit from the container and  commit the container .
+
+
+commit :  it basically  save the container changes as new  image .  now we can lauch the new container
+       using new image .
+
+
+Example: apache2 service  : webhosting  :
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+2) declerative Mode: scripted method/file  method/DOckerfile 

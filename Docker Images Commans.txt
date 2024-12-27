@@ -1,0 +1,730 @@
+Major key terms: 
+
+
+Namespaces:  
+     1) PID
+     2) USER
+     3) VNIC
+     4) IP
+     5) FileSystem
+     6) Mounts
+
+
+Cgroups:  control groups: 
+           it limit (compute resource) containers usages . 
+           compute Resource:  memory/Cpu /
+
+Runtime:
+
+   dockerd
+   containerd:  
+   cri-o
+
+
+Docker  community : 
+
+
+ package:  RUntime/CLI/Storage Plugin/Network plugin / security  plugin / 
+
+
+edition:
+    docker-ce: community Edition: free available  
+    docker-ee: enterprise  editions.
+
+_________________________
+
+chpater-1: Completed:
+
+Chapter-2:  Lab Setup and  Installation ?
+
+
+1) Local laptop: 
+
+  virtulization : 
+          1) Vmware software/virtual box? 
+
+          2) Linux ISo: Ubuntu 
+
+
+lab-1: machine prepared
+Lab-2: Install container  technol ? 
+
+
+
+
+
+
+
+
+2) Cloud-based: Hold
+___________________________________________
+
+
+Chapter03:
+
+
+Basics command about the Images/containers 
+
+Images:
+1) list,search,Pull,Inspect,open,size,different  Imageversion,delete .
+
+
+1. Raw Images  ? : Alpine/Ubuntu/Debain/rhel: minor footprint 
+2. Service Images ?  Ready to  use = Software + os minor footprint
+3. distroless images: it contains  software related not  additional  commands . 
+
+1.Pkg manager
+2. tar
+3. cp
+4. ls 
+
+
+jenkins: software: IT ? 
+
+
+
+
+
+
+Containers:
+1) list,delete,stop,restart,IP,login,uitlization,Processlist,
+
+
+Docker: 4 weekends: 
+
+6 weekend :  CKA:
+
+
+
+
+
+
+
+root@dockerhost:~#
+root@dockerhost:~# docker images
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~# docker  search    python
+root@dockerhost:~# docker  search    python
+NAME                              DESCRIPTION                                     STARS     OFFICIAL
+python                            Python is an interpreted, interactive, objec…   9555      [OK]
+hylang                            Hy is a Lisp dialect that translates express…   59        [OK]
+pypy                              PyPy is a fast, compliant alternative implem…   387       [OK]
+circleci/python                   Python is an interpreted, interactive, objec…   88
+bitnami/python                    Bitnami container image for Python              27
+cimg/python                                                                       15
+appdynamics/python-agent-init     AppDynamics Repository for Python agent inst…   0
+okteto/python                                                                     0
+pachyderm/python-sdk-ci-testing                                                   0
+rapidfort/python-chromedriver                                                     12
+pachyderm/python-build                                                            0
+clearlinux/python                 Python programming interpreted language with…   9
+airbyte/python-connector-base                                                     0
+intel/python                                                                      0
+chainguard/python                 Minimal Python image based on Wolfi.            1
+ubuntu/python                     A chiselled Ubuntu rock with the Python runt…   1
+faucet/python3                     Python3 docker image for amd64                 7
+openwhisk/python3action           Apache OpenWhisk runtime for Python 3 Actions   6
+openwhisk/python2action           Apache OpenWhisk runtime for Python v2 Actio…   2
+opensuse/python                   openSUSE base image with python                 0
+submitty/python                   Official Repository for Submitty Python Imag…   0
+paketobuildpacks/python                                                           0
+mirantis/python-operations-api    https://mirantis.jira.com/browse/IT-40189       0
+okteto/python-fastapi                                                             0
+paketobuildpacks/python-start                                                     0
+root@dockerhost:~#
+root@dockerhost:~# docker  search    registry.access.redhat.com/python
+root@dockerhost:~# docker  search    registry.access.redhat.com/python
+NAME                                      DESCRIPTION                                     STARS     OFFICIAL
+openshift3/python-33-rhel7                Python 3.3 platform for building and running…   0
+ubi8/python-311                           rhcc_registry.access.redhat.com_ubi8/python-…   0
+ubi8/python-27                            Platform for building and running Python 2.7…   0
+ubi8/python-36                            Platform for building and running Python 3.6…   0
+ubi8/python-38                            Platform for building and running Python 3.8…   0
+ubi8/python-39                            Platform for building and running Python 3.9…   0
+ubi9/python-39                            rhcc_registry.access.redhat.com_ubi9/python-…   0
+ubi9/python-311                           rhcc_registry.access.redhat.com_ubi9/python-…   0
+rhscl/python-36-rhel7                     Python 3.6 available as container is a base …   0
+rhscl/python-35-rhel7                     Python 3.5 platform for building and running…   0
+rhscl/python-27-rhel7                     Python 2.7 platform for building and running…   0
+rhscl/python-34-rhel7                     Python 3.4 platform for building and running…   0
+ubi7/python-36                            Platform for building and running Python 3.6…   0
+ubi7/python-38                            Python 3.8 platform for building and running…   0
+ubi7/python-27                            Python 2.7 platform for building and running…   0
+codeready-workspaces/stacks-python        "Red Hat CodeReady Workspaces- Python Stack …   0
+codeready-workspaces-beta/stacks-python   Red Hat CodeReady Workspaces- Python Stack c…   0
+rhel7-atomic                              Red Hat Enterprise Linux Atomic Image is a m…   0
+rhel7/rhel-atomic                         Red Hat Enterprise Linux Atomic Image is a m…   0
+rhel-atomic                               Red Hat Enterprise Linux Atomic Image is a m…   0
+rhel7-minimal                             Red Hat Enterprise Linux Minimal Image is a …   0
+rhel-minimal                              Red Hat Enterprise Linux Minimal Image is a …   0
+rhel7-rhel-minimal                        Red Hat Enterprise Linux Minimal Image is a …   0
+rhscl/s2i-base-rhel7                      Base image delivers all the essential librar…   0
+ubi8/s2i-base                             Base image with essential libraries and tool…   0
+ubi7/s2i-base                             Base image with essential libraries and tool…   0
+ubi9/s2i-base                             rhcc_registry.access.redhat.com_ubi9/s2i-base   0
+root@dockerhost:~#
+root@dockerhost:~# docker  search    nginx
+NAME                                              DESCRIPTION                                     STARS     OFFICIAL
+nginx                                             Official build of Nginx.                        19765     [OK]
+unit                                              Official build of NGINX Unit: Universal Web …   26        [OK]
+nginx/nginx-ingress                               NGINX and  NGINX Plus Ingress Controllers fo…   89
+nginxinc/nginx-unprivileged                       Unprivileged NGINX Dockerfiles                  144
+nginx/nginx-prometheus-exporter                   NGINX Prometheus Exporter for NGINX and NGIN…   40
+nginxinc/nginx-s3-gateway                         Authenticating and caching gateway based on …   6
+nginx/unit                                        This repository is retired, use the Docker o…   64
+nginx/nginx-ingress-operator                      NGINX Ingress Operator for NGINX and NGINX P…   2
+nginxinc/amplify-agent                            NGINX Amplify Agent docker repository           1
+nginx/nginx-quic-qns                              NGINX QUIC interop                              1
+nginxinc/ingress-demo                             Ingress Demo                                    4
+nginxproxy/nginx-proxy                            Automated nginx proxy for Docker containers …   132
+nginxproxy/acme-companion                         Automated ACME SSL certificate generation fo…   131
+bitnami/nginx                                     Bitnami container image for NGINX               185
+bitnami/nginx-ingress-controller                  Bitnami container image for NGINX Ingress Co…   32
+bitnami/nginx-exporter                            Bitnami container image for NGINX Exporter      5
+ubuntu/nginx                                      Nginx, a high-performance reverse proxy & we…   112
+nginxproxy/docker-gen                             Generate files from docker container meta-da…   16
+nginxinc/mra-fakes3                                                                               0
+kasmweb/nginx                                     An Nginx image based off nginx:alpine and in…   7
+rancher/nginx-ingress-controller                                                                  13
+nginxinc/mra_python_base                                                                          0
+nginxinc/ngx-rust-tool                                                                            0
+rancher/nginx-ingress-controller-defaultbackend                                                   2
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~# docker  search    docker.io/nginx
+root@dockerhost:~# docker  search    docker.io/nginx
+NAME                                              DESCRIPTION                                     STARS     OFFICIAL
+nginx                                             Official build of Nginx.                        19765     [OK]
+unit                                              Official build of NGINX Unit: Universal Web …   26        [OK]
+nginx/nginx-ingress                               NGINX and  NGINX Plus Ingress Controllers fo…   89
+nginxinc/nginx-unprivileged                       Unprivileged NGINX Dockerfiles                  144
+nginx/nginx-prometheus-exporter                   NGINX Prometheus Exporter for NGINX and NGIN…   40
+nginxinc/nginx-s3-gateway                         Authenticating and caching gateway based on …   6
+nginx/unit                                        This repository is retired, use the Docker o…   64
+nginx/nginx-ingress-operator                      NGINX Ingress Operator for NGINX and NGINX P…   2
+nginxinc/amplify-agent                            NGINX Amplify Agent docker repository           1
+nginx/nginx-quic-qns                              NGINX QUIC interop                              1
+nginxinc/ingress-demo                             Ingress Demo                                    4
+nginxproxy/nginx-proxy                            Automated nginx proxy for Docker containers …   132
+nginxproxy/acme-companion                         Automated ACME SSL certificate generation fo…   131
+bitnami/nginx                                     Bitnami container image for NGINX               185
+bitnami/nginx-ingress-controller                  Bitnami container image for NGINX Ingress Co…   32
+bitnami/nginx-exporter                            Bitnami container image for NGINX Exporter      5
+ubuntu/nginx                                      Nginx, a high-performance reverse proxy & we…   112
+nginxproxy/docker-gen                             Generate files from docker container meta-da…   16
+nginxinc/mra-fakes3                                                                               0
+kasmweb/nginx                                     An Nginx image based off nginx:alpine and in…   7
+rancher/nginx-ingress-controller                                                                  13
+nginxinc/mra_python_base                                                                          0
+nginxinc/ngx-rust-tool                                                                            0
+rancher/nginx-ingress-controller-defaultbackend                                                   2
+root@dockerhost:~#
+root@dockerhost:~# docker pull docker.io/nginx
+root@dockerhost:~# docker pull docker.io/nginx
+Using default tag: latest
+latest: Pulling from library/nginx
+13808c22b207: Pull complete
+6fcdffcd79f0: Pull complete
+fbf231d461b3: Pull complete
+c9590dd9c988: Pull complete
+b4033143d859: Pull complete
+abaefc5fcbde: Pull complete
+bcef83155b8b: Pull complete
+Digest: sha256:9ff236ed47fe39cf1f0acf349d0e5137f8b8a6fd0b46e5117a401010e56222e1
+Status: Downloaded newer image for nginx:latest
+docker.io/library/nginx:latest
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~# docker  pull nginx
+Using default tag: latest
+latest: Pulling from library/nginx
+Digest: sha256:9ff236ed47fe39cf1f0acf349d0e5137f8b8a6fd0b46e5117a401010e56222e1
+Status: Image is up to date for nginx:latest
+docker.io/library/nginx:latest
+root@dockerhost:~#
+root@dockerhost:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+nginx        latest    c613f16b6642   8 weeks ago   187MB
+root@dockerhost:~# docker pull nginx:1.25.4
+1.25.4: Pulling from library/nginx
+Digest: sha256:9ff236ed47fe39cf1f0acf349d0e5137f8b8a6fd0b46e5117a401010e56222e1
+Status: Downloaded newer image for nginx:1.25.4
+docker.io/library/nginx:1.25.4
+root@dockerhost:~#
+root@dockerhost:~# docker pull nginx:1.19
+root@dockerhost:~# docker pull nginx:1.19
+1.19: Pulling from library/nginx
+69692152171a: Pull complete
+49f7d34d62c1: Pull complete
+5f97dc5d71ab: Pull complete
+cfcd0711b93a: Pull complete
+be6172d7651b: Pull complete
+de9813870342: Pull complete
+Digest: sha256:df13abe416e37eb3db4722840dd479b00ba193ac6606e7902331dcea50f4f1f2
+Status: Downloaded newer image for nginx:1.19
+docker.io/library/nginx:1.19
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+nginx        1.25.4    c613f16b6642   8 weeks ago   187MB
+nginx        latest    c613f16b6642   8 weeks ago   187MB
+nginx        1.19      f0b8a9a54136   2 years ago   133MB
+root@dockerhost:~#
+root@dockerhost:~# ls /var/lib/docker/
+buildkit  containers  engine-id  image  network  overlay2  plugins  runtimes  swarm  tmp  volumes
+root@dockerhost:~#
+root@dockerhost:~# docker  system  df
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          2         0         319.9MB   319.9MB (100%)
+Containers      0         0         0B        0B
+Local Volumes   0         0         0B        0B
+Build Cache     0         0         0B        0B
+root@dockerhost:~#
+root@dockerhost:~# docker rmi nginx:latest
+Untagged: nginx:latest
+root@dockerhost:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+nginx        1.25.4    c613f16b6642   8 weeks ago   187MB
+nginx        1.19      f0b8a9a54136   2 years ago   133MB
+root@dockerhost:~#
+root@dockerhost:~# docker  system  df
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          2         0         319.9MB   319.9MB (100%)
+Containers      0         0         0B        0B
+Local Volumes   0         0         0B        0B
+Build Cache     0         0         0B        0B
+root@dockerhost:~#
+root@dockerhost:~# df  -h   /
+Filesystem                         Size  Used Avail Use% Mounted on
+/dev/mapper/ubuntu--vg-ubuntu--lv  9.8G  3.7G  5.6G  40% /
+root@dockerhost:~#
+root@dockerhost:~# docker  search    docker.io/nginx
+root@dockerhost:~# docker  search    docker.io/nginx
+NAME                                              DESCRIPTION                                     STARS     OFFICIAL
+nginx                                             Official build of Nginx.                        19765     [OK]
+unit                                              Official build of NGINX Unit: Universal Web …   26        [OK]
+nginx/nginx-ingress                               NGINX and  NGINX Plus Ingress Controllers fo…   89
+nginxinc/nginx-unprivileged                       Unprivileged NGINX Dockerfiles                  144
+nginx/nginx-prometheus-exporter                   NGINX Prometheus Exporter for NGINX and NGIN…   40
+nginxinc/nginx-s3-gateway                         Authenticating and caching gateway based on …   6
+nginx/unit                                        This repository is retired, use the Docker o…   64
+nginx/nginx-ingress-operator                      NGINX Ingress Operator for NGINX and NGINX P…   2
+nginxinc/amplify-agent                            NGINX Amplify Agent docker repository           1
+nginx/nginx-quic-qns                              NGINX QUIC interop                              1
+nginxinc/ingress-demo                             Ingress Demo                                    4
+nginxproxy/nginx-proxy                            Automated nginx proxy for Docker containers …   132
+nginxproxy/acme-companion                         Automated ACME SSL certificate generation fo…   131
+bitnami/nginx                                     Bitnami container image for NGINX               185
+bitnami/nginx-ingress-controller                  Bitnami container image for NGINX Ingress Co…   32
+bitnami/nginx-exporter                            Bitnami container image for NGINX Exporter      5
+ubuntu/nginx                                      Nginx, a high-performance reverse proxy & we…   112
+nginxproxy/docker-gen                             Generate files from docker container meta-da…   16
+nginxinc/mra-fakes3                                                                               0
+kasmweb/nginx                                     An Nginx image based off nginx:alpine and in…   7
+rancher/nginx-ingress-controller                                                                  13
+nginxinc/mra_python_base                                                                          0
+nginxinc/ngx-rust-tool                                                                            0
+rancher/nginx-ingress-controller-defaultbackend                                                   2
+root@dockerhost:~# docker search jekins
+root@dockerhost:~# docker search jenkins
+NAME                           DESCRIPTION                                     STARS     OFFICIAL
+jenkins                        DEPRECATED; use "jenkins/jenkins:lts" instead   5686      [OK]
+jenkins/jenkins                The leading open source automation server       3883
+jenkins/inbound-agent          Docker image for a Jenkins agent which can c…   131
+jenkins/jnlp-slave             a Jenkins agent which can connect to Jenkins…   157
+jenkins/ssh-agent              Docker image for Jenkins agents connected ov…   52
+jenkins/jnlp-agent-maven       A JNLP-based agent with Maven 3 built in        9
+jenkins/slave                  base image for a Jenkins Agent, which includ…   49
+bitnami/jenkins                Bitnami Docker Image for Jenkins                66
+jenkins/ssh-slave              A Jenkins slave using SSH to establish conne…   39
+jenkins/agent                                                                  62
+jenkins/jnlp-agent-ruby                                                        1
+jenkins/jnlp-agent-docker                                                      10
+jenkins/jnlp-agent-node                                                        1
+jenkins/jnlp-agent-python      A JNLP-based agent with Python built in         3
+jenkins/ath                    Jenkins Acceptance Test Harness                 1
+jenkins/jenkins-experimental   Experimental images of Jenkins. These images…   3
+rancher/jenkins-jenkins                                                        1
+jenkins/pct                    Plugin Compat Tester - no longer published a…   5
+jenkins/jenkinsfile-runner     Jenkinsfile Runner packages                     3
+rancher/jenkins-jnlp-slave                                                     0
+jenkins/core-pr-tester         Docker image for testing pull-requests sent …   1
+jenkins/jnlp-agent-alpine                                                      2
+jenkins/jnlp-agent-coresdk                                                     2
+rancher/jenkins-slave          Jenkins Build Slave                             0
+jenkins/evergreen              An automatically self-updating Jenkins distr…   5
+root@dockerhost:~# docker pull jenkins/jenkins:jdk17
+root@dockerhost:~# docker pull jenkins/jenkins:jdk17
+jdk17: Pulling from jenkins/jenkins
+71215d55680c: Pull complete
+2f9e20cbb83f: Downloading [======================================>            ]   47.2MB/61.36MB
+34e6fb723d85: Download complete
+de5fa851defa: Download complete
+e9f09a855db2: Download complete
+b93121d47aae: Downloading [=======================>                           ]  43.47MB/93.51MB
+bd4e9e50ddba: Download complete
+1a59e207bccb: Download complete
+f73fc52b13a1: Waiting
+c1b904936de1: Waiting
+a30d90d952da: Waiting
+19a29b9c800c: Waiting
+^C
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+nginx        1.25.4    c613f16b6642   8 weeks ago   187MB
+nginx        1.19      f0b8a9a54136   2 years ago   133MB
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~# docker pull docker.io/alpine
+Using default tag: latest
+latest: Pulling from library/alpine
+4abcf2066143: Pull complete
+Digest: sha256:c5b1261d6d3e43071626931fc004f70149baeba2c8ec672bd4f27761f8e1ad6b
+Status: Downloaded newer image for alpine:latest
+docker.io/library/alpine:latest
+root@dockerhost:~#
+root@dockerhost:~# docker pull docker.io/ubuntu
+Using default tag: latest
+latest: Pulling from library/ubuntu
+bccd10f490ab: Pull complete
+Digest: sha256:77906da86b60585ce12215807090eb327e7386c8fafb5402369e421f44eff17e
+Status: Downloaded newer image for ubuntu:latest
+docker.io/library/ubuntu:latest
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~# docker images
+root@dockerhost:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
+ubuntu       latest    ca2b0f26964c   6 weeks ago    77.9MB
+nginx        1.25.4    c613f16b6642   8 weeks ago    187MB
+alpine       latest    05455a08881e   2 months ago   7.38MB
+nginx        1.19      f0b8a9a54136   2 years ago    133MB
+root@dockerhost:~#
+root@dockerhost:~# docker  pull  registry.access.redhat.com/rhel7.3
+Using default tag: latest
+latest: Pulling from rhel7.3
+d55ab3b04d8b: Pull complete
+b94f985aad49: Pull complete
+Digest: sha256:6dfc99a38ea95453dd93e96d88e81ddadb04ecb2665c109b532fca95ef0b5823
+Status: Downloaded newer image for registry.access.redhat.com/rhel7.3:latest
+registry.access.redhat.com/rhel7.3:latest
+root@dockerhost:~#
+root@dockerhost:~# docker images
+REPOSITORY                           TAG       IMAGE ID       CREATED        SIZE
+ubuntu                               latest    ca2b0f26964c   6 weeks ago    77.9MB
+nginx                                1.25.4    c613f16b6642   8 weeks ago    187MB
+alpine                               latest    05455a08881e   2 months ago   7.38MB
+nginx                                1.19      f0b8a9a54136   2 years ago    133MB
+registry.access.redhat.com/rhel7.3   latest    93bb76ddeb7a   6 years ago    193MB
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~# docker pull debian:bookworm-slim
+bookworm-slim: Pulling from library/debian
+13808c22b207: Already exists
+Digest: sha256:3d5df92588469a4c503adbead0e4129ef3f88e223954011c2169073897547cac
+Status: Downloaded newer image for debian:bookworm-slim
+docker.io/library/debian:bookworm-slim
+root@dockerhost:~#
+root@dockerhost:~# docker images
+REPOSITORY                           TAG             IMAGE ID       CREATED        SIZE
+debian                               bookworm-slim   35a0e8114244   3 days ago     74.8MB
+ubuntu                               latest          ca2b0f26964c   6 weeks ago    77.9MB
+nginx                                1.25.4          c613f16b6642   8 weeks ago    187MB
+alpine                               latest          05455a08881e   2 months ago   7.38MB
+nginx                                1.19            f0b8a9a54136   2 years ago    133MB
+registry.access.redhat.com/rhel7.3   latest          93bb76ddeb7a   6 years ago    193MB
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~# docker rmi  93bb76ddeb7a
+Untagged: registry.access.redhat.com/rhel7.3:latest
+Untagged: registry.access.redhat.com/rhel7.3@sha256:6dfc99a38ea95453dd93e96d88e81ddadb04ecb2665c109b532fca95ef0b5823
+Deleted: sha256:93bb76ddeb7a0a882f74f9ebc2c4d25b035823b2d3a4a98243e6f11f55b3f1d7
+Deleted: sha256:27770ee4aae9ec5c1f3f667caa69b7cc8639554a8a34c0cf349630d38917fe06
+Deleted: sha256:dda6e8dfdcf7a918d1fd7038a2a6de43f78c194c0bb220ea086af6c414254f4b
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~# docker images
+REPOSITORY   TAG             IMAGE ID       CREATED        SIZE
+debian       bookworm-slim   35a0e8114244   3 days ago     74.8MB
+ubuntu       latest          ca2b0f26964c   6 weeks ago    77.9MB
+nginx        1.25.4          c613f16b6642   8 weeks ago    187MB
+alpine       latest          05455a08881e   2 months ago   7.38MB
+nginx        1.19            f0b8a9a54136   2 years ago    133MB
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~# history
+    1  clear
+    2  apt-get update
+    3  apt-get install ca-certificates curl
+    4  install -m 0755 -d /etc/apt/keyrings
+    5  chmod a+r /etc/apt/keyrings/docker.asc
+    6  echo   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" |   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    7  apt-get update
+    8  ls /var/lib/docker
+    9  apt  install docker-ce -y
+   10  ls  /var/lib/docker/
+   11  pidof containerd
+   12  systemctl start docker
+   13  systemctl enable docker
+   14  ls  /var/lib/docker/
+   15  docker
+   16  clear
+   17  docker images
+   18  docker  search    python
+   19  docker  search    registry.access.redhat.com/python
+   20  docker  search    nginx
+   21  docker  search    docker.io/nginx
+   22  docker pull docker.io/nginx
+   23  docker  pull nginx
+   24  docker images
+   25  docker pull nginx:1.25.4
+   26  docker pull nginx:1.19
+   27  docker images
+   28  ls /var/lib/docker/
+   29  docker  system  df
+   30  docker rmi nginx:latest
+   31  docker images
+   32  docker  system  df
+   33  df  -h   /
+   34  docker  search    docker.io/nginx
+   35  docker search jenkins
+   36  docker pull jenkins/jenkins:jdk17
+   37  docker images
+   38  docker pull docker.io/alpine
+   39  docker pull docker.io/ubuntu
+   40  docker images
+   41  docker  pull  registry.access.redhat.com/rhel7.3
+   42  docker images
+   43  docker pull debian:bookworm-slim
+   44  docker images
+   45  docker rmi  93bb76ddeb7a
+   46  docker images
+   47  history
+root@dockerhost:~# docker search nginx
+root@dockerhost:~# docker search nginx
+NAME                                              DESCRIPTION                                     STARS     OFFICIAL
+nginx                                             Official build of Nginx.                        19765     [OK]
+unit                                              Official build of NGINX Unit: Universal Web …   26        [OK]
+nginx/nginx-ingress                               NGINX and  NGINX Plus Ingress Controllers fo…   89
+nginxinc/nginx-unprivileged                       Unprivileged NGINX Dockerfiles                  144
+nginx/nginx-prometheus-exporter                   NGINX Prometheus Exporter for NGINX and NGIN…   40
+nginxinc/nginx-s3-gateway                         Authenticating and caching gateway based on …   6
+nginx/unit                                        This repository is retired, use the Docker o…   64
+nginx/nginx-ingress-operator                      NGINX Ingress Operator for NGINX and NGINX P…   2
+nginxinc/amplify-agent                            NGINX Amplify Agent docker repository           1
+nginx/nginx-quic-qns                              NGINX QUIC interop                              1
+nginxinc/ingress-demo                             Ingress Demo                                    4
+nginxproxy/nginx-proxy                            Automated nginx proxy for Docker containers …   132
+nginxproxy/acme-companion                         Automated ACME SSL certificate generation fo…   131
+bitnami/nginx                                     Bitnami container image for NGINX               185
+bitnami/nginx-ingress-controller                  Bitnami container image for NGINX Ingress Co…   32
+bitnami/nginx-exporter                            Bitnami container image for NGINX Exporter      5
+ubuntu/nginx                                      Nginx, a high-performance reverse proxy & we…   112
+nginxproxy/docker-gen                             Generate files from docker container meta-da…   16
+nginxinc/mra-fakes3                                                                               0
+kasmweb/nginx                                     An Nginx image based off nginx:alpine and in…   7
+rancher/nginx-ingress-controller                                                                  13
+nginxinc/mra_python_base                                                                          0
+nginxinc/ngx-rust-tool                                                                            0
+rancher/nginx-ingress-controller-defaultbackend                                                   2
+root@dockerhost:~#
+root@dockerhost:~# docker search  ramprakashupadhyay123
+root@dockerhost:~# docker search  ramprakashupadhyay123
+NAME                                       DESCRIPTION               STARS     OFFICIAL
+ramprakashupadhyay123/opesnhift                                      0
+ramprakashupadhyay123/website                                        0
+ramprakashupadhyay123/kubernetes                                     0
+ramprakashupadhyay123/krnetworkimage       this is est               0
+ramprakashupadhyay123/eap                                            0
+ramprakashupadhyay123/apache               apache base image         0
+ramprakashupadhyay123/testapache                                     0
+ramprakashupadhyay123/postgresql           this is postgresq image   0
+ramprakashupadhyay123/php                  docker intregration       0
+ramprakashupadhyay123/apacheimg                                      0
+ramprakashupadhyay123/websiteimg                                     0
+ramprakashupadhyay123/mycompanywebist      v2  v3 v5                 0
+ramprakashupadhyay123/morningbatch                                   0
+ramprakashupadhyay123/webportal                                      0
+ramprakashupadhyay123/afternoonbatch       latest ,v1                0
+ramprakashupadhyay123/webui                                          0
+ramprakashupadhyay123/demoapplication      demoapplication           0
+ramprakashupadhyay123/dockercompose                                  0
+ramprakashupadhyay123/dotnet                                         0
+ramprakashupadhyay123/jboss                                          0
+ramprakashupadhyay123/tested                                         0
+ramprakashupadhyay123/ruby                                           0
+ramprakashupadhyay123/mycompanywebiste                               0
+ramprakashupadhyay123/dockerbatch-apache                             0
+ramprakashupadhyay123/wordpress                                      0
+root@dockerhost:~#
+root@dockerhost:~# docker pull  jenkins
+Using default tag: latest
+^C
+root@dockerhost:~# docker  search   jenkins
+NAME                           DESCRIPTION                                     STARS     OFFICIAL
+jenkins                        DEPRECATED; use "jenkins/jenkins:lts" instead   5686      [OK]
+jenkins/jenkins                The leading open source automation server       3883
+jenkins/inbound-agent          Docker image for a Jenkins agent which can c…   131
+jenkins/jnlp-slave             a Jenkins agent which can connect to Jenkins…   157
+jenkins/ssh-agent              Docker image for Jenkins agents connected ov…   52
+jenkins/jnlp-agent-maven       A JNLP-based agent with Maven 3 built in        9
+jenkins/slave                  base image for a Jenkins Agent, which includ…   49
+bitnami/jenkins                Bitnami Docker Image for Jenkins                66
+jenkins/agent                                                                  62
+jenkins/ssh-slave              A Jenkins slave using SSH to establish conne…   39
+jenkins/jnlp-agent-ruby                                                        1
+jenkins/jnlp-agent-docker                                                      10
+jenkins/jnlp-agent-node                                                        1
+jenkins/jnlp-agent-python      A JNLP-based agent with Python built in         3
+jenkins/jenkins-experimental   Experimental images of Jenkins. These images…   3
+jenkins/ath                    Jenkins Acceptance Test Harness                 1
+rancher/jenkins-jenkins                                                        1
+jenkins/pct                    Plugin Compat Tester - no longer published a…   5
+jenkins/jenkinsfile-runner     Jenkinsfile Runner packages                     3
+rancher/jenkins-jnlp-slave                                                     0
+jenkins/core-pr-tester         Docker image for testing pull-requests sent …   1
+jenkins/jnlp-agent-alpine                                                      2
+jenkins/jnlp-agent-coresdk                                                     2
+rancher/jenkins-slave          Jenkins Build Slave                             0
+jenkins/evergreen              An automatically self-updating Jenkins distr…   5
+root@dockerhost:~# docker  search  nginx
+root@dockerhost:~# docker  search  nginx
+NAME                                              DESCRIPTION                                     STARS     OFFICIAL
+nginx                                             Official build of Nginx.                        19765     [OK]
+unit                                              Official build of NGINX Unit: Universal Web …   26        [OK]
+nginx/nginx-ingress                               NGINX and  NGINX Plus Ingress Controllers fo…   89
+nginxinc/nginx-unprivileged                       Unprivileged NGINX Dockerfiles                  144
+nginx/nginx-prometheus-exporter                   NGINX Prometheus Exporter for NGINX and NGIN…   40
+nginxinc/nginx-s3-gateway                         Authenticating and caching gateway based on …   6
+nginx/unit                                        This repository is retired, use the Docker o…   64
+nginx/nginx-ingress-operator                      NGINX Ingress Operator for NGINX and NGINX P…   2
+nginxinc/amplify-agent                            NGINX Amplify Agent docker repository           1
+nginx/nginx-quic-qns                              NGINX QUIC interop                              1
+nginxinc/ingress-demo                             Ingress Demo                                    4
+nginxproxy/nginx-proxy                            Automated nginx proxy for Docker containers …   132
+nginxproxy/acme-companion                         Automated ACME SSL certificate generation fo…   131
+bitnami/nginx                                     Bitnami container image for NGINX               185
+bitnami/nginx-ingress-controller                  Bitnami container image for NGINX Ingress Co…   32
+bitnami/nginx-exporter                            Bitnami container image for NGINX Exporter      5
+ubuntu/nginx                                      Nginx, a high-performance reverse proxy & we…   112
+nginxproxy/docker-gen                             Generate files from docker container meta-da…   16
+nginxinc/mra-fakes3                                                                               0
+kasmweb/nginx                                     An Nginx image based off nginx:alpine and in…   7
+rancher/nginx-ingress-controller                                                                  13
+nginxinc/mra_python_base                                                                          0
+nginxinc/ngx-rust-tool                                                                            0
+rancher/nginx-ingress-controller-defaultbackend                                                   2
+root@dockerhost:~#
+root@dockerhost:~# docker pull rancher/nginx-ingress-controller
+Using default tag: latest
+Error response from daemon: manifest for rancher/nginx-ingress-controller:latest not found: manifest unknown: manifest unknown
+root@dockerhost:~# docker pull rancher/nginx-ingress-controller:nginx-1.9.6-hardened1
+root@dockerhost:~# docker pull rancher/nginx-ingress-controller:nginx-1.9.6-hardened1
+nginx-1.9.6-hardened1: Pulling from rancher/nginx-ingress-controller
+3f925073f8ab: Downloading [============================>                      ]  27.38MB/47.86MB
+dd1dbfda7342: Downloading [=============================================>     ]     37MB/40.39MB
+fec62ed18a01: Downloading [=============>                                     ]  23.05MB/88.59MB
+091de3beab58: Waiting
+c02bdfd8cc76: Waiting
+303a8059775a: Waiting
+e7969c800d9d: Waiting
+631adc23ae42: Waiting
+02fd0041ffa7: Waiting
+92411007c35a: Waiting
+81ed677cc388: Waiting
+55ce74d7720a: Waiting
+837ee8e1d1dc: Waiting
+6e73021d4dff: Waiting
+4f4fb700ef54: Waiting
+9f1b2250c5ed: Waiting
+6e19c50e55f5: Waiting
+2979cf2cac01: Waiting
+88d2b4d5bb74: Waiting
+61b4507d915e: Waiting
+ff85ca39e25b: Waiting
+1613dd10f7a0: Waiting
+^C
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~# docker search   registry.access.redhat.com/nginx
+NAME                                DESCRIPTION                                     STARS     OFFICIAL
+ubi8/nginx-120                      Platform for running nginx 1.20 or building …   0
+ubi8/nginx-118                      Platform for running nginx 1.18 or building …   0
+ubi9/nginx-120                      rhcc_registry.access.redhat.com_ubi9/nginx-1…   0
+ubi8/nginx-122                      rhcc_registry.access.redhat.com_ubi8/nginx-1…   0
+ubi9/nginx-122                      rhcc_registry.access.redhat.com_ubi9/nginx-1…   0
+rhscl/nginx-18-rhel7                Nginx 1.8 server and a reverse proxy server     0
+rhscl/nginx-112-rhel7               Nginx is a web server and a reverse proxy se…   0
+rhscl/nginx-114-rhel7               Nginx is a web server and a reverse proxy se…   0
+rhscl/nginx-110-rhel7               Nginx container image that delivers an nginx…   0
+rhscl/nginx-16-rhel7                Nginx 1.6 server and a reverse proxy server     0
+ubi7/nginx-118                      Platform for running nginx 1.18 or building …   0
+ubi7/nginx-120                      Platform for running nginx 1.20 or building …   0
+3scale-amp23/apicast-gateway         3scale's API gateway (APIcast) is an OpenRe…   0
+3scale-amp20/apicast-gateway        3scale's API gateway (APIcast) is an OpenRes…   0
+3scale-amp25/apicast-gateway        3scale's API gateway (APIcast) is an OpenRes…   0
+rhamp10/apicast-gateway             3scale's API gateway (APIcast) is an OpenRes…   0
+3scale-amp20-beta/apicast-gateway   3scale's API gateway (APIcast) is an OpenRes…   0
+3scale-amp21/apicast-gateway        3scale AMP image used for API gateway           0
+3scale-amp24/apicast-gateway        No description                                  0
+rhmap45/wildcard-proxy              RHMAP image that provides mapping and proxy …   0
+rhmap46/wildcard-proxy              RHMAP image that provides mapping and proxy …   0
+rhmap43/wildcard-proxy              RHMAP Docker image that provides mapping and…   0
+3scale-amp22/apicast-gateway        APIcast API gateway needs connection to the …   0
+rhmap47/wildcard-proxy              RHMAP image that provides mapping and proxy …   0
+rhmap44/wildcard-proxy              RHMAP Docker image that provides mapping and…   0
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~#
+root@dockerhost:~# docker images
+REPOSITORY   TAG             IMAGE ID       CREATED        SIZE
+debian       bookworm-slim   35a0e8114244   3 days ago     74.8MB
+ubuntu       latest          ca2b0f26964c   6 weeks ago    77.9MB
+nginx        1.25.4          c613f16b6642   8 weeks ago    187MB
+alpine       latest          05455a08881e   2 months ago   7.38MB
+nginx        1.19            f0b8a9a54136   2 years ago    133MB
+root@dockerhost:~#
+root@dockerhost:~#
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

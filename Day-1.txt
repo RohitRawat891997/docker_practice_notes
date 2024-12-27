@@ -1,0 +1,217 @@
+Linux Administrator ? 
+
+(RHCSA)
+
+1) Docker (Container)
+
+
+     1) DCA : Docker certified associate . 
+            durations: 24 hours  
+             Mode: weekend 
+             hours: 3 hours 
+
+      
+    2) RedHat: 
+
+           1) EX188: 
+
+
+
+
+2) Kubernetes :  (orchestration tools  for containers)
+
+
+
+          Linux Foundations: 
+     
+        1) CKA: certified kubernetes Administrator.
+
+             time : 32 hours 
+             weeks : 6 days : 
+
+        2) CKAD: certified kubernetes Administrator developer. 
+
+       3) CKS:  certified kubernetes security specilist . 10% (4 tools )
+
+
+Doubts: 
+
+   late night : 8:30 to 9:30
+
+
+
+Exams: exam prepartion  free ?  (3 months)
+
+1 year: 2  attempt : 
+
+labs based 
+
+
+
+
+1) User managed 
+
+
+2) Cloud Managed (PAAS) Kubernetes: 
+
+   1) IAAS
+   2) PAAS: 
+   3) SAAS
+
+
+ PAAS FORM:
+              1) EKS: AWS
+              2) GKE: Google
+              3) AKS: Azure 
+
+  
+
+
+Opensource:
+       1) Kubernetes:
+
+Enterprise:
+
+   1) Redhat: openshift
+   2) Vmware: Tanzu
+   3) suse: ranchor 
+
+_________________________________________________
+
+
+Devops:  
+
+
+Face-1
+
+1) VCS tools:  (version control system ): GIT/SVN/
+
+
+2) Software Build tools: Maven/gradel/ANT 
+
+
+3) CI/CD tools: Jenkins 
+
+
+face-2
+
+3) Provisionig tools:  Containers
+
+
+
+4) Orchestration tools:  Kubernetes 
+
+
+5) Configurations  tools:  Ansible 
+
+
+6) IAAS Tools:  Terraforms:  
+
+  90% public  cloud  ? 
+
+
+
+7) Monitoring tools: Nagios/zabbix/promethues/elastic seach 
+_________________________________________________________________
+
+
+__________________________________________________
+
+ task-1:  Installtion
+ task: how to loggin  linux server
+ task3: how to user and password 
+ tasks34: Software installation
+ task5: Partition creattion
+____________________________________
+
+
+
+4 experince:
+
+Linux
+
+Shell  scripting : Python 
+
+
+
+Cloud
+
+
+Devops:
+
+
+9 to 14:  lacs
+
+_____________________________________
+
+6 year:  21 lacs 
+
+
+8  year:  26 lacs 
+
+
+10 year: 32 lacs
+___________________________
+
+Linux
+
++ 
+
+Clou Computing
+
++  
+
+Container/kubernetes:
+
+________________________________
+
+
+
+
+
+
+
+
+8:15
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3) Devops 
